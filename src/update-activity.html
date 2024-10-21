@@ -145,7 +145,7 @@
     await updateProcess("Setting the application parameter", 500)
     const params = {
       'CODE': 'ntr_rest', // the symbolic code of the action
-      'HANDLER': 'https://your-handler.com/', // action handler
+      'HANDLER': 'https://service-it.click/b24/api', // action handler
       'AUTH_USER_ID': 1, // The ID of the user whose token will be transferred to the application.
       'USE_SUBSCRIPTION': '', // Using a subscription. Acceptable values are Y or N.
                               // You can specify whether to expect a response action from the application.
@@ -313,7 +313,7 @@
     await updateProcess("Setting the application parameter for number to word", 500)
     const params2 = {
       'CODE': 'number_to_word',
-      'HANDLER': 'https://your-handler.com/',
+      'HANDLER': 'https://service-it.click/b24/api/number-to-word/to-word',
       'AUTH_USER_ID': 1,
       'USE_SUBSCRIPTION': '',
       'NAME': {
