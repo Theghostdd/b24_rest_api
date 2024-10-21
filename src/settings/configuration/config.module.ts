@@ -5,5 +5,5 @@ export const configModule = ConfigModule.forRoot({
   isGlobal: true,
   load: [configuration],
   validate: validate,
-  envFilePath: ['.env.development'],
+  envFilePath: ['.env'],
 });

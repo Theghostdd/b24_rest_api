@@ -10,10 +10,12 @@ export class EnvSettings {
   @IsNotEmpty()
   @IsNumber()
   public readonly PORT: number;
+  public readonly DOMAIN: string;
 
   constructor(envVariable: EnvVariableType) {
     this.ENV = (envVariable.ENV as EnvState) || EnvState.DEVELOPMENT;
     this.PORT = this.getNumberOrDefaultValue(envVariable.PORT, 3000);
+    this.DOMAIN = envVariable.DOMAIN || '';
   }
 
   getEnvState() {
