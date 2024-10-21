@@ -11,16 +11,14 @@ export class DomainGuardStrategy {
   constructor(private readonly envSettings: EnvSettings) {}
   verify(request: Request) {
     const domain = this.envSettings.DOMAIN;
-    console.log('domain', domain);
     if (!domain) {
       return true;
     }
 
-    if (!request.body.auth || !request.body.auth.client_endpoint)
+    if (!request.body.auth || !request.body.auth.domain)
       throw new UnauthorizedException();
 
-    if (request.body.auth.client_endpoint !== domain)
-      throw new ForbiddenException();
+    if (request.body.auth.domain !== domain) throw new ForbiddenException();
 
     return true;
   }
