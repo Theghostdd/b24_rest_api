@@ -1,3 +1,31 @@
+# Bitrix24 API Integration Application
+
+This API application is designed for integration with the **Bitrix24** platform, utilizing **Bitrix24 API** to interact with REST API methods and authorize via **Bitrix OAuth2**. The primary goal of this application is to simplify user interaction with Bitrix24, expand the capabilities of standard tools, and enhance business process efficiency. It adds features not available in the cloud version of Bitrix24.
+
+## Key Features:
+
+1. **REST API Integration for Bitrix24**
+
+2. **Data Processing with jsonpath**: Using the **jsonpath** library to extract key data from JSON responses makes data handling easier and faster, simplifying the process of working with and analyzing information.
+
+3. **Number to Text Conversion**: A feature that converts numeric values into text representations is included. The **n2Word** library is used for this task, making data more readable and accessible for analysis.
+
+4. **Integration and Update of Actions in Bitrix24**: The application allows for the integration of new actions into the Bitrix24 cloud portal and their updates as necessary.
+
+5. **User Interface (UI) Integration**.
+
+## Resources:
+- **UI Interface**: [GitHub Repository for the UI Interface](https://github.com/Theghostdd/b24_rest_api_ui)
+
+## Running the Application:
+
+1. Clone the repository.
+2. Install all necessary packages.
+3. Ensure the application runs correctly.
+4. In the `init-activity` and `update-activity` files, set the correct paths to your request handler servers.
+5. Configure the action parameters and the results to be returned.
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>

@@ -100,7 +100,6 @@
 <script src="//api.bitrix24.com/api/v1/"></script>
 
 <script type="text/javascript">
-  // https://service-it.click/b24/api
   const delay = (ms) => {
     return new Promise((res) => {
       setTimeout(() => {
@@ -144,25 +143,25 @@
     await updateStatus("Installation", 500)
     await updateProcess("Setting the application parameter", 500)
     const params = {
-      'CODE': 'ntr_rest', // символьный код нашего действия
-      'HANDLER': 'https://service-it.click/b24/api',// скрипт-обработчик действия
-      'AUTH_USER_ID': 1, // ID пользователя, токен которого будет передан приложению.
-      'USE_SUBSCRIPTION': '', // Использование подписки. Допустимые значения - Y или N.
-                              //Можно указать, должно ли ожидать действие ответа от приложения.
-                              //Если параметр пустой или не указан - пользователь может сам настроить этот параметр в настройках действия в дизайнере бизнес-процессов.
+      'CODE': 'ntr_rest', // the symbolic code of the action
+      'HANDLER': 'https://your-handler.com/', // action handler
+      'AUTH_USER_ID': 1, // The ID of the user whose token will be transferred to the application.
+      'USE_SUBSCRIPTION': '', // Using a subscription. Acceptable values are Y or N.
+                              // You can specify whether to expect a response action from the application.
+                              // If the parameter is empty or not specified, the user can configure this parameter himself in the action settings in the business process designer.
       'NAME': {
-        'ru': 'REST API', // название действия в редакторе БП
+        'ru': 'REST API', // the name of the action in the BP editor
       },
       'DESCRIPTION': {
-        'ru': 'REST API', // описание действия в редакторе БП
+        'ru': 'REST API', // description of the action in the BP editor
       },
-      'PROPERTIES': {// массив входных параметров
+      'PROPERTIES': { // Array of input parameters
         'method': {
           'NAME': {
-            'ru': 'Метод',
+            'ru': 'Method',
           },
           'Description': {
-            'ru': 'Метод bitrix 24 api',
+            'ru': 'The bitrix24 api method',
           },
           'Type': 'string',
           'Required': 'Y',
@@ -196,10 +195,10 @@
         },
         'isBig': {
           'NAME': {
-            'ru': 'Получать больше 50 записей?',
+            'ru': 'Getting more than 50 entries?',
           },
           'Description': {
-            'ru': 'Получение более 50 записей',
+            'ru': 'Getting more than 50 records',
           },
           'Type': 'bool',
           'Required': 'Y',
@@ -208,10 +207,10 @@
         },
 
       },
-      'RETURN_PROPERTIES': {// массив выходных параметров
+      'RETURN_PROPERTIES': { // array of output parameters
         'result': {
           'Name': {
-            'ru': 'Результат',
+            'ru': 'Result',
           },
           'Type': 'string',
           'Multiple': 'Y',
@@ -220,7 +219,7 @@
 
         'result_1': {
           'Name': {
-            'ru': 'Результат 1',
+            'ru': 'Result 1',
           },
           'Type': 'string',
           'Multiple': 'Y',
@@ -228,7 +227,7 @@
         },
         'result_2': {
           'Name': {
-            'ru': 'Результат 2',
+            'ru': 'Result 2',
           },
           'Type': 'string',
           'Multiple': 'Y',
@@ -237,7 +236,7 @@
 
         'result_3': {
           'Name': {
-            'ru': 'Результат 3',
+            'ru': 'Result 3',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -246,7 +245,7 @@
 
         'result_4': {
           'Name': {
-            'ru': 'Результат 4',
+            'ru': 'Result 4',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -255,7 +254,7 @@
 
         'result_5': {
           'Name': {
-            'ru': 'Результат 5',
+            'ru': 'Result 5',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -264,7 +263,7 @@
 
         'result_6': {
           'Name': {
-            'ru': 'Результат 6',
+            'ru': 'Result 6',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -273,7 +272,7 @@
 
         'result_7': {
           'Name': {
-            'ru': 'Результат 7',
+            'ru': 'Result 7',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -282,7 +281,7 @@
 
         'result_8': {
           'Name': {
-            'ru': 'Результат 8',
+            'ru': 'Result 8',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -291,7 +290,7 @@
 
         'result_9': {
           'Name': {
-            'ru': 'Результат 9',
+            'ru': 'Result 9',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -300,7 +299,7 @@
 
         'result_10': {
           'Name': {
-            'ru': 'Результат 10',
+            'ru': 'Result 10',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -312,25 +311,23 @@
     await updateProcess(params, 500)
     await updateProcess("Setting the application parameter for number to word", 500)
     const params2 = {
-      'CODE': 'number_to_word', // символьный код нашего действия
-      'HANDLER': 'https://service-it.click/b24/api/number-to-word/to-word',// скрипт-обработчик действия
-      'AUTH_USER_ID': 1, // ID пользователя, токен которого будет передан приложению.
-      'USE_SUBSCRIPTION': '', // Использование подписки. Допустимые значения - Y или N.
-                              //Можно указать, должно ли ожидать действие ответа от приложения.
-                              //Если параметр пустой или не указан - пользователь может сам настроить этот параметр в настройках действия в дизайнере бизнес-процессов.
+      'CODE': 'number_to_word',
+      'HANDLER': 'https://your-handler.com/',
+      'AUTH_USER_ID': 1,
+      'USE_SUBSCRIPTION': '',
       'NAME': {
-        'ru': 'Number to word', // название действия в редакторе БП
+        'ru': 'Number to word',
       },
       'DESCRIPTION': {
-        'ru': 'Number to word', // описание действия в редакторе БП
+        'ru': 'Number to word',
       },
-      'PROPERTIES': {// массив входных параметров
+      'PROPERTIES': {
         'number': {
           'NAME': {
-            'ru': 'Число',
+            'ru': 'Number',
           },
           'Description': {
-            'ru': 'Получение расшифровки сумм на 7 языках',
+            'ru': 'Getting the decryption',
           },
           'Type': 'string',
           'Required': 'Y',
@@ -338,10 +335,10 @@
           'Default': '',
         },
       },
-      'RETURN_PROPERTIES': {// массив выходных параметров
+      'RETURN_PROPERTIES': {
         'result': {
           'Name': {
-            'ru': 'Результат',
+            'ru': 'Result',
           },
           'Type': 'string',
           'Multiple': 'Y',
@@ -350,7 +347,7 @@
 
         'result_1': {
           'Name': {
-            'ru': 'Результат 1',
+            'ru': 'Result 1',
           },
           'Type': 'string',
           'Multiple': 'Y',
@@ -358,7 +355,7 @@
         },
         'result_2': {
           'Name': {
-            'ru': 'Результат 2',
+            'ru': 'Result 2',
           },
           'Type': 'string',
           'Multiple': 'Y',
@@ -367,7 +364,7 @@
 
         'result_3': {
           'Name': {
-            'ru': 'Результат 3',
+            'ru': 'Result 3',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -376,7 +373,7 @@
 
         'result_4': {
           'Name': {
-            'ru': 'Результат 4',
+            'ru': 'Result 4',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -385,7 +382,7 @@
 
         'result_5': {
           'Name': {
-            'ru': 'Результат 5',
+            'ru': 'Result 5',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -394,7 +391,7 @@
 
         'result_6': {
           'Name': {
-            'ru': 'Результат 6',
+            'ru': 'Result 6',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -403,7 +400,7 @@
 
         'result_7': {
           'Name': {
-            'ru': 'Результат 7',
+            'ru': 'Result 7',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -412,7 +409,7 @@
 
         'result_8': {
           'Name': {
-            'ru': 'Результат 8',
+            'ru': 'Result 8',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -421,7 +418,7 @@
 
         'result_9': {
           'Name': {
-            'ru': 'Результат 9',
+            'ru': 'Result 9',
           },
           'Type': 'string',
           'Multiple': 'N',
@@ -430,19 +427,18 @@
 
         'result_10': {
           'Name': {
-            'ru': 'Результат 10',
+            'ru': 'Result 10',
           },
           'Type': 'string',
           'Multiple': 'N',
           'Default': null,
         },
-
       },
     };
     await updateProcess(params2, 500)
     await updateProcess('Installing the application', 500)
     await updateStatus("Installation", 500)
-    // регистрируем действие БП
+    // registering the BP action
     BX24.callMethod(
       'bizproc.activity.add',
       params,
@@ -458,7 +454,7 @@
           updateStatus('The application has been successfully installed');
           updateProcess('Successfully installed', 0 , 'success')
           document.getElementById('processing').remove()
-          //завершить установку (ОБЯЗАТЕЛЬНО)
+          // complete the installation (REQUIRED)
           BX24.installFinish();
         }
       },
@@ -479,7 +475,6 @@
           updateStatus('The application has been successfully installed');
           updateProcess('Successfully installed', 0 , 'success')
           document.getElementById('processing').remove()
-          //завершить установку (ОБЯЗАТЕЛЬНО)
           BX24.installFinish();
         }
       },
