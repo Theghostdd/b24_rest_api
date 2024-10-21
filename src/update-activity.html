@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style>
+      * {
+          box-sizing: border-box;
+      }
+      body {
+          font-family: 'Roboto', sans-serif;
+          background-color: #0a0a0a;
+
+      }
+      #status {
+          font-family: Arial, sans-serif;
+          margin-top: 20px;
+          border: 1px solid #2d2d2e;
+          border-radius: 5px;
+          background-color: #19191a;
+          padding: 1em;
+          color: #529ef3;
+      }
+      #process {
+          font-family: Arial, sans-serif;
+          margin-top: 20px;
+          border: 1px solid #2d2d2e;
+          border-radius: 5px;
+          background-color: #19191a;
+          padding: 1em;
+          color: #e5e5e5;
+      }
+
+      #status {
+          text-transform: uppercase;
+          font-size: 20px;
+      }
+
+      #processing {
+          display: inline-flex;
+          align-items: center;
+      }
+
+      .dot {
+          font-size: 24px;
+          color: #529ef3;
+          opacity: 0;
+          animation: blink 1.5s infinite;
+      }
+
+      @keyframes blink {
+          0% {
+              opacity: 0;
+          }
+          50% {
+              opacity: 1;
+          }
+          100% {
+              opacity: 0;
+          }
+      }
+
+      .dot:nth-child(1) {
+          animation-delay: 0s;
+      }
+
+      .dot:nth-child(2) {
+          animation-delay: 0.5s;
+      }
+
+      .dot:nth-child(3) {
+          animation-delay: 1s;
+      }
+
+      .info {
+          padding-bottom: 10px;
+          padding-top: 10px;
+          border-bottom: 1px solid #2d2d2e;
+      }
+
+      .error {
+          color: #ff0000;
+      }
+      .success {
+          color: #05d705;
+      }
+  </style>
+</head>
+<body>
+<div id="process"></div>
+
+<div id="status">
+    <span id="status-text">Processing</span>
+    <span id="processing">
+      <span class="dot">.</span>
+      <span class="dot">..</span>
+      <span class="dot">...</span>
+    </span>
+</div>
+
+<script src="//api.bitrix24.com/api/v1/"></script>
+<script type="text/javascript">
+  const delay = (ms) => {
+    return new Promise((res) => {
+      setTimeout(() => {
+        res()
+      }, ms)
+    })
+  }
+
+  const updateStatus = async (message, ms) => {
+    document.getElementById('status-text').innerText = message;
+    await delay(ms)
+  }
+  const updateProcess = async (message, ms, className) => {
+    const process = document.getElementById('process');
+    const messageBox = document.createElement('div')
+    messageBox.classList.add('info', className)
+
+    if (typeof message !== 'string') {
+      try {
+        const formattedMessage = JSON.stringify(message, null, 2);
+        const preElement = document.createElement('pre');
+        preElement.textContent = formattedMessage;
+        messageBox.appendChild(preElement);
+      } catch (e) {
+        messageBox.append(message)
+      }
+    } else {
+      messageBox.append(message)
+    }
+    process.append(messageBox)
+    await delay(ms)
+  }
+  updateStatus("Loading", 0)
+  updateProcess("Loading", 0)
+
+  BX24.fitWindow(data => {
+    let x = BX24.getScrollSize();
+    BX24.resizeWindow(x.scrollWidth, 1000)
+  })
+
+
+  BX24.init(async function() {
+    await updateStatus("Installation", 500)
+    await updateProcess("Setting the application parameter", 500)
+    const params = {
+      'CODE': 'ntr_rest',
+      'FIELDS': {
+        'HANDLER': 'https://service-it.click/b24/api',
+        'AUTH_USER_ID': 1,
+        'USE_SUBSCRIPTION': '',
+        'NAME': {
+          'ru': 'REST API',
+        },
+        'DESCRIPTION': {
+          'ru': 'REST API',
+        },
+        'PROPERTIES': {
+          'method': {
+            'NAME': {
+              'ru': 'Метод',
+            },
+            'Description': {
+              'ru': 'Метод bitrix 24 api',
+            },
+            'Type': 'string',
+            'Required': 'Y',
+            'Multiple': 'N',
+            'Default': '',
+          },
+
+          'body': {
+            'NAME': {
+              'ru': 'JSON',
+            },
+            'Description': {
+              'ru': 'JSON body',
+            },
+            'Type': 'text',
+            'Required': 'Y',
+            'Multiple': 'N',
+            'Default': '',
+          },
+          'keys': {
+            'NAME': {
+              'ru': 'JSONPath',
+            },
+            'Description': {
+              'ru': 'JSONPath',
+            },
+            'Type': 'string',
+            'Required': 'Y',
+            'Multiple': 'Y',
+            'Default': '$',
+          },
+          'isBig': {
+            'NAME': {
+              'ru': 'Получать больше 50 записей?',
+            },
+            'Description': {
+              'ru': 'Получение более 50 записей',
+            },
+            'Type': 'bool',
+            'Required': 'Y',
+            'Multiple': 'N',
+            'Default': 'N',
+          },
+
+        },
+        'RETURN_PROPERTIES': {
+          'result': {
+            'Name': {
+              'ru': 'Результат',
+            },
+            'Type': 'string',
+            'Multiple': 'Y',
+            'Default': null,
+          },
+
+          'result_1': {
+            'Name': {
+              'ru': 'Результат 1',
+            },
+            'Type': 'string',
+            'Multiple': 'Y',
+            'Default': null,
+          },
+          'result_2': {
+            'Name': {
+              'ru': 'Результат 2',
+            },
+            'Type': 'string',
+            'Multiple': 'Y',
+            'Default': null,
+          },
+
+          'result_3': {
+            'Name': {
+              'ru': 'Результат 3',
+            },
+            'Type': 'string',
+            'Multiple': 'N',
+            'Default': null,
+          },
+
+          'result_4': {
+            'Name': {
+              'ru': 'Результат 4',
+            },
+            'Type': 'string',
+            'Multiple': 'N',
+            'Default': null,
+          },
+
+          'result_5': {
+            'Name': {
+              'ru': 'Результат 5',
+            },
+            'Type': 'string',
+            'Multiple': 'N',
+            'Default': null,
+          },
+
+          'result_6': {
+            'Name': {
+              'ru': 'Результат 6',
+            },
+            'Type': 'string',
+            'Multiple': 'N',
+            'Default': null,
+          },
+
+          'result_7': {
+            'Name': {
+              'ru': 'Результат 7',
+            },
+            'Type': 'string',
+            'Multiple': 'N',
+            'Default': null,
+          },
+
+          'result_8': {
+            'Name': {
+              'ru': 'Результат 8',
+            },
+            'Type': 'string',
+            'Multiple': 'N',
+            'Default': null,
+          },
+
+          'result_9': {
+            'Name': {
+              'ru': 'Результат 9',
+            },
+            'Type': 'string',
+            'Multiple': 'N',
+            'Default': null,
+          },
+
+          'result_10': {
+            'Name': {
+              'ru': 'Результат 10',
+            },
+            'Type': 'string',
+            'Multiple': 'N',
+            'Default': null,
+          },
+
+        },
+      }
+    };
+    await updateProcess(params, 500)
+    await updateProcess("Setting the application parameter for number to word", 500)
+    const params2 = {
+      'CODE': 'number_to_word', // символьный код нашего действия
+      'HANDLER': 'https://service-it.click/b24/api/number-to-word/to-word',// скрипт-обработчик действия
+      'AUTH_USER_ID': 1, // ID пользователя, токен которого будет передан приложению.
+      'USE_SUBSCRIPTION': '', // Использование подписки. Допустимые значения - Y или N.
+                              //Можно указать, должно ли ожидать действие ответа от приложения.
+                              //Если параметр пустой или не указан - пользователь может сам настроить этот параметр в настройках действия в дизайнере бизнес-процессов.
+      'NAME': {
+        'ru': 'Number to word', // название действия в редакторе БП
+      },
+      'DESCRIPTION': {
+        'ru': 'Number to word', // описание действия в редакторе БП
+      },
+      'PROPERTIES': {// массив входных параметров
+        'number': {
+          'NAME': {
+            'ru': 'Число',
+          },
+          'Description': {
+            'ru': 'Получение расшифровки сумм на 7 языках',
+          },
+          'Type': 'string',
+          'Required': 'Y',
+          'Multiple': 'N',
+          'Default': '',
+        },
+      },
+      'RETURN_PROPERTIES': {// массив выходных параметров
+        'result': {
+          'Name': {
+            'ru': 'Результат',
+          },
+          'Type': 'string',
+          'Multiple': 'Y',
+          'Default': null,
+        },
+
+        'result_1': {
+          'Name': {
+            'ru': 'Результат 1',
+          },
+          'Type': 'string',
+          'Multiple': 'Y',
+          'Default': null,
+        },
+        'result_2': {
+          'Name': {
+            'ru': 'Результат 2',
+          },
+          'Type': 'string',
+          'Multiple': 'Y',
+          'Default': null,
+        },
+
+        'result_3': {
+          'Name': {
+            'ru': 'Результат 3',
+          },
+          'Type': 'string',
+          'Multiple': 'N',
+          'Default': null,
+        },
+
+        'result_4': {
+          'Name': {
+            'ru': 'Результат 4',
+          },
+          'Type': 'string',
+          'Multiple': 'N',
+          'Default': null,
+        },
+
+        'result_5': {
+          'Name': {
+            'ru': 'Результат 5',
+          },
+          'Type': 'string',
+          'Multiple': 'N',
+          'Default': null,
+        },
+
+        'result_6': {
+          'Name': {
+            'ru': 'Результат 6',
+          },
+          'Type': 'string',
+          'Multiple': 'N',
+          'Default': null,
+        },
+
+        'result_7': {
+          'Name': {
+            'ru': 'Результат 7',
+          },
+          'Type': 'string',
+          'Multiple': 'N',
+          'Default': null,
+        },
+
+        'result_8': {
+          'Name': {
+            'ru': 'Результат 8',
+          },
+          'Type': 'string',
+          'Multiple': 'N',
+          'Default': null,
+        },
+
+        'result_9': {
+          'Name': {
+            'ru': 'Результат 9',
+          },
+          'Type': 'string',
+          'Multiple': 'N',
+          'Default': null,
+        },
+
+        'result_10': {
+          'Name': {
+            'ru': 'Результат 10',
+          },
+          'Type': 'string',
+          'Multiple': 'N',
+          'Default': null,
+        },
+
+      },
+    };
+    await updateProcess(params2, 500)
+    await updateProcess('Updating the application', 500)
+    await updateStatus("Updating", 500)
+    BX24.callMethod(
+      'bizproc.activity.update',
+      params,
+      function(result) {
+        if (result.error()) {
+          document.getElementById('status-text').classList.add('error')
+          updateStatus('Something went wrong.');
+          document.getElementById('processing').remove()
+          console.log(typeof result.error())
+          updateProcess(result.error(), 0 , 'error')
+        } else {
+          document.getElementById('status-text').classList.add('success')
+          updateStatus('The action has been successfully updated');
+          updateProcess('Successfully updated', 0 , 'success')
+          document.getElementById('processing').remove()
+          BX24.installFinish();
+        }
+      }
+    );
+
+    await updateStatus("Installation - number - to word", 500)
+
+    BX24.callMethod(
+      'bizproc.activity.update',
+      params2,
+      function(result) {
+        if (result.error()) {
+          document.getElementById('status-text').classList.add('error')
+          updateStatus('Something went wrong.');
+          document.getElementById('processing').remove()
+          console.log(typeof result.error())
+          updateProcess(result.error(), 0 , 'error')
+        } else {
+          document.getElementById('status-text').classList.add('success')
+          updateStatus('The action has been successfully updated');
+          updateProcess('Successfully updated', 0 , 'success')
+          document.getElementById('processing').remove()
+          BX24.installFinish();
+        }
+      }
+    );
+  });
+</script>
+
+</body>
+</html>
